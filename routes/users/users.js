@@ -61,4 +61,14 @@ router.get('/getuserbyid', function(req, res) {
 
 });
 
+router.put('/updateuserbyid/:id', function(req, res) {
+
+
+  //userController.updateUserByID 
+    //if successfully updated user we sends it back where it was called 
+      //else
+    //send error message that user does not exist
+});
+
+
 module.exports = router;

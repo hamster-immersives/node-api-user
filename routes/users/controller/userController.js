@@ -108,5 +108,17 @@ module.exports = {
 							})
 
 			});
+		},
+		updateUserByID: (params) => {
+
+			return new Promise((resolve, reject) => {
+
+				//Find user by ID. If the user exist
+					//we insert the new data and set new to true in the option argument 
+				//else 
+					//if user does not exist we reject and show error message 'User does not exist'
+				
+			});
+
 		}
 }
