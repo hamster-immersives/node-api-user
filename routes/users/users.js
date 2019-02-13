@@ -84,6 +84,17 @@ router.put('/updateuserbyid/:id', function(req, res) {
 
 router.delete('/deleteuserbyid/:id', function(req, res) {
 
+  //set up delete router
+//give the router a path name deleteuserbyid /deleteuserbyid and ID params /:id = /deleteuserbyid/:id
+
+//inside the code body 
+// userController give it a method call deleteUserByID passing in ID = req.params.id 
+  //if success
+    //tell user the target has been deleted 
+  //else 
+    //tell user the target does not exist  
+
+
   userController.deleteUserByID(req.params.id)
                 .then(result => {
                   res.json(result);
@@ -96,15 +107,58 @@ router.delete('/deleteuserbyid/:id', function(req, res) {
 
 });
 
-//set up delete router
-//give the router a path name deleteuserbyid /deleteuserbyid and ID params /:id = /deleteuserbyid/:id
 
-//inside the code body 
-// userController give it a method call deleteUserByID passing in ID = req.params.id 
-  //if success
-    //tell user the target has been deleted 
-  //else 
-    //tell user the target does not exist  
+router.post('/addonetolikes/:id', function(req, res) {
+
+  userController.addOneToLikesByID(req.params.id)
+                .then(result => {
+                  res.json(result);
+                })
+                .catch(error => {
+                  let errors = {}
+                  errors.message = error.message;
+                  res.status(error.status).json(errors);
+                });
+
+
+});
+
+// router.put('/addonetolikes/:id', function(req, res) {
+
+//   userController.addOneToLikesByID(req.params.id)
+//                 .then(result => {
+//                   res.json(result);
+//                 })
+//                 .catch(error => {
+//                   let errors = {}
+//                   errors.message = error.message;
+//                   res.status(error.status).json(errors);
+//                 });
+
+
+// });
+
+// router.get('/addonetolikes/byid', function(req, res) {
+
+//   userController.addOneToLikesByID(req.query.id)
+//                 .then(result => {
+//                   res.json(result);
+//                 })
+//                 .catch(error => {
+//                   let errors = {}
+//                   errors.message = error.message;
+//                   res.status(error.status).json(errors);
+//                 });
+// });
+
+
+//set up a post router
+//name it /addonetolikes/:id
+  //create a method in the userController addonetolikes
+  //if user exist add one to likes
+    //else 
+  //send error message back "User does not exist" 
+
 
 
 module.exports = router;
