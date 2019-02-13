@@ -25,7 +25,88 @@ module.exports = {
             //else 
                 //create new user
                 //send user back to where is called    
-            
+            User
+							.findOne({email: params.email})
+							.then(user => {
+
+								if (user) {
+									let errors = {};
+									errors.message = 'Email Already Exist';
+									errors.status = 409;
+									reject(errors)
+								} else {
+
+									const newUser = new User({
+										firstName: params.firstName,
+										lastName: params.lastName,
+										email: params.email,
+										password: params.password,
+										gender: params.gender,
+										address: params.address,
+										city: params.city,
+										state: params.state,
+										zipcode: params.zipcode,
+										dob: params.dob,
+										occupation: params.occupation
+									})
+									
+									newUser	
+										.save()
+										.then(user => resolve(user))
+										.catch(error => reject(error));
+								}
+							})
+							.catch(error => {
+								console.log(error)
+								reject(error)
+							});
+
+
+					// const newUser = new User({
+					// 	firstName: params.firstName,
+					// 	lastName: params.lastName,
+					// 	email: params.email,
+					// 	password: params.password,
+					// 	gender: params.gender,
+					// 	address: params.address,
+					// 	city: params.city,
+					// 	state: params.state,
+					// 	zipcode: params.zipcode,
+					// 	dob: params.dob,
+					// 	occupation: params.occupation
+					// })
+
+					// newUser	
+					// 	.save()
+					// 	.then(user => {
+					// 		resolve(user)
+					// 	})
+					// 	.catch(error => {		
+					// 		if(error.code === 11000) {
+					// 			let errorObj = {}
+					// 			errorObj.status = 400;
+					// 			errorObj.message = 'Email Already Exist - Please Choose Another One';
+					// 			reject(errorObj)
+					// 		}
+					// 	});
+								
         });
-    }
+		},
+		findUserByID: (id) => {
+			return new Promise((resolve, reject) => {
+
+				// Find user by ID (check if find user by ID function exist)
+				// if user exist sends it back where the function is called
+					//else 
+				//	Send erorr message doesn't exist and go sign up. 
+					User.findById({_id: id})
+							.then(result => {
+								resolve(result);
+							})
+							.catch(error => {
+								reject(error);
+							})
+
+			});
+		}
 }

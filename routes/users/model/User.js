@@ -5,7 +5,7 @@ const now = moment();
 const UserSchema = new mongoose.Schema({
     firstName: { type: String, default: ''},
     lastName: { type: String, default: ''},
-    email: { type: String, unique: true, default: ''},
+    email: { type: String, default: ''},
     password: { type: String, default: ''},
     gender: { type: String, default: ''},
     address: { type: String, default: ''},
