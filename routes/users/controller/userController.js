@@ -158,13 +158,31 @@ module.exports = {
 
 		},
 		addOneToLikesByID: (id) => {
-
+				//write a method addonetolikes
+			//write return a promise
+			//find a user by ID 
+			//if user exist 
+				//grab the likes and add one to it
+				//and add one to likes 
+			//else 
+				//send error message back - "User does not exist"
 			return new Promise((resolve, reject) => {
 
-				User.findById(id)
-					.then(user => {
-					
-						const updatedLikesVar = user.likes + 1;
+				User.findOneAndUpdate({ _id: id }, { $inc: {likes: 1 }}, {new: true})
+					.then(result => {
+						resolve(result);
+					})
+					.catch(error => {
+						let errors = {};
+						errors.message = 'From Catch: User does not exist';
+						errors.status = 400;
+						reject(errors);
+					})
+
+
+				// User.findById(id)
+				// 	.then(user => {
+						// const updatedLikesVar = user.likes + 1;
 
 						// user.likes = updatedLikes;
 
@@ -178,38 +196,37 @@ module.exports = {
 						// 		reject(error)
 						// 	});
 
-						let updatedLikes = {
-							likes: updatedLikesVar
-						}
+						// let updatedLikes = {
+						// 	likes: updatedLikesVar
+						// }
 
-						User.findByIdAndUpdate({_id: id},updatedLikes, {new: true})
-							.then(result => {
-								resolve(result);
-							})
-							.catch(error => {
-								reject(error);
-							})
+						// User.findByIdAndUpdate({_id: id},updatedLikes, {new: true})
+						// 	.then(result => {
+						// 		resolve(result);
+						// 	})
+						// 	.catch(error => {
+						// 		reject(error);
+						// 	})
 
-					})
-					.catch(error => {
-						let errors = {};
-						errors.message = 'From Catch: User does not exist';
-						errors.status = 400;
-						reject(errors);
-					})
+					// })
+					// .catch(error => {
+					// 	let errors = {};
+					// 	errors.message = 'From Catch: User does not exist';
+					// 	errors.status = 400;
+					// 	reject(errors);
+					// })
 
 			});
 
 
-		}
-		//write a method addonetolikes
-			//write return a promise
-			//find a user by ID 
-			//if user exist 
-				//grab the likes and add one to it
-				//and add one to likes 
-			//else 
-				//send error message back - "User does not exist"		
+		},
+		//getUserByAge 
+		//find user age under 25
+		//if users exist 
+			//sends it back to where the function is called 
+		//else 
+			//tell users recorsd does not exist
+			
 		
 
 }

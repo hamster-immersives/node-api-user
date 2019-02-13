@@ -159,6 +159,16 @@ router.post('/addonetolikes/:id', function(req, res) {
     //else 
   //send error message back "User does not exist" 
 
+//==========================================================
+
+//set a get router
+//get user by age /getuserbyage?age=
+
+//inside the route 
+  //create a user method userController. getUserByAge
+    //if is in the 'then block' sends it back to where the function is called
+  //else
+    //if is in the 'catch block' sends it back with error message 
 
 
 module.exports = router;
