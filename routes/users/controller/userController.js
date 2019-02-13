@@ -38,18 +38,17 @@ module.exports = {
 
 									const newUser = new User({
 										firstName: params.firstName,
-										lastName: params.lastName,
 										email: params.email,
-										password: params.password,
 										gender: params.gender,
-										address: params.address,
 										city: params.city,
 										state: params.state,
 										zipcode: params.zipcode,
-										dob: params.dob,
+										age: params.age,
+										likes: params.likes,
+										hobbies: params.hobbies,
 										occupation: params.occupation
-									})
-									
+								})
+
 									newUser	
 										.save()
 										.then(user => resolve(user))
@@ -109,7 +108,7 @@ module.exports = {
 
 			});
 		},
-		updateUserByID: (params) => {
+		updateUserByID: (id, params) => {
 
 			return new Promise((resolve, reject) => {
 
@@ -117,8 +116,47 @@ module.exports = {
 					//we insert the new data and set new to true in the option argument 
 				//else 
 					//if user does not exist we reject and show error message 'User does not exist'
+
+					User.findByIdAndUpdate({_id: id}, params, {new: true})
+							.then(result => {
+								resolve(result);
+							})
+							.catch(error => {
+								let errors = {};
+								errors.message = 'From Catch: User does not exist';
+								errors.status = 400;
+								reject(errors);
+							});
 				
 			});
 
+		},
+		deleteUserByID: (id) => {
+
+			return new Promise((resolve, reject) => {
+
+				User.findByIdAndDelete(id)
+						.then(result => {
+							let successObj = {}
+							successObj.message = `User with ID: ${id} has been deleted`;
+							successObj.confirmation = "Success";
+							resolve(successObj);
+						})
+						.catch(error => {
+							let errors = {};
+							errors.message = 'From Catch: User does not exist';
+							errors.status = 400;
+							reject(errors);
+						})
+
+			});
+
 		}
+		//deleteByID wrap this function with a Promise
+		//Use the Mongoose method findByIdandDelete 
+		//if successfully deleted the user 
+			//send a message tell the user the target is deleted 
+		//else 
+			//tell the user the target does not exist		
+
 }

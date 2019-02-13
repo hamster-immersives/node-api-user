@@ -63,12 +63,48 @@ router.get('/getuserbyid', function(req, res) {
 
 router.put('/updateuserbyid/:id', function(req, res) {
 
-
   //userController.updateUserByID 
     //if successfully updated user we sends it back where it was called 
       //else
     //send error message that user does not exist
+
+  userController.updateUserByID(req.params.id, req.body)
+                .then(result => {
+                  res.json(result)
+                })
+                .catch(error => {
+
+                  let errors = {}
+                  errors.message = error.message;
+
+                  res.status(error.status).json(errors);
+                });
+
 });
+
+router.delete('/deleteuserbyid/:id', function(req, res) {
+
+  userController.deleteUserByID(req.params.id)
+                .then(result => {
+                  res.json(result);
+                })
+                .catch(error => {
+                  let errors = {}
+                  errors.message = error.message;
+                  res.status(error.status).json(errors);
+                })
+
+});
+
+//set up delete router
+//give the router a path name deleteuserbyid /deleteuserbyid and ID params /:id = /deleteuserbyid/:id
+
+//inside the code body 
+// userController give it a method call deleteUserByID passing in ID = req.params.id 
+  //if success
+    //tell user the target has been deleted 
+  //else 
+    //tell user the target does not exist  
 
 
 module.exports = router;
