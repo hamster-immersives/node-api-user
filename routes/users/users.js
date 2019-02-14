@@ -170,5 +170,39 @@ router.post('/addonetolikes/:id', function(req, res) {
   //else
     //if is in the 'catch block' sends it back with error message 
 
+router.get('/getuserbyage', function(req, res) {
+  userController.getUserByAge(req.query.age)
+    .then(result => {
+      res.json(result);
+    })
+    .catch(error => {
+      let errors = {}
+      errors.message = error.message;
+      res.status(error.status).json(errors);
+    });
+
+})
+
+router.get('/getusersbyhobbies', function(req, res) {
+
+  console.log(req.query)
+
+  userController.getUsersByHobbies(req.query.hobbies)
+                .then(result => {
+                  res.json(result);
+                })
+                .catch(error => {
+                  let errors = {}
+                  errors.message = error.message;
+                  res.status(error.status).json(errors);
+                })
+
+});
+
+//a get path - getusersbyhobbies 
+//userController.getUsersByHobbies
+//if success sends the object back to where is called
+  //else
+//sends the error message back to where is called
 
 module.exports = router;

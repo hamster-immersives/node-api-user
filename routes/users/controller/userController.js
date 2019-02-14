@@ -1,4 +1,5 @@
 const User = require('../model/User');
+const errorMessage = require('../utils/errorMessage');
 
 module.exports = {
     getAllUsers: (params) => {
@@ -122,9 +123,7 @@ module.exports = {
 								resolve(result);
 							})
 							.catch(error => {
-								let errors = {};
-								errors.message = 'From Catch: User does not exist';
-								errors.status = 400;
+                let errors = errorMessage.noUserFound();
 								reject(errors);
 							});
 				
@@ -148,9 +147,7 @@ module.exports = {
 							resolve(successObj);
 						})
 						.catch(error => {
-							let errors = {};
-							errors.message = 'From Catch: User does not exist';
-							errors.status = 400;
+              let errors = errorMessage.noUserFound();
 							reject(errors);
 						})
 
@@ -173,9 +170,7 @@ module.exports = {
 						resolve(result);
 					})
 					.catch(error => {
-						let errors = {};
-						errors.message = 'From Catch: User does not exist';
-						errors.status = 400;
+						let errors = errorMessage.noUserFound();
 						reject(errors);
 					})
 
@@ -220,13 +215,92 @@ module.exports = {
 
 
 		},
-		//getUserByAge 
+		getUserByAge: (age) => {
+					//getUserByAge 
 		//find user age under 25
 		//if users exist 
 			//sends it back to where the function is called 
 		//else 
 			//tell users recorsd does not exist
-			
-		
+			return new Promise((resolve, reject) => {
+				
+				User.find({age: {
+					$lt: age
+				}})
+				.then(users => {
 
+					if (users.length === 0) {
+						let errors = errorMessage.noUserFound();
+						reject(errors);
+					}
+
+					resolve(users)
+				})
+				.catch(error => {
+				  let errors = errorMessage.noUserFound();
+					reject(errors);
+				});
+			});
+		}, 
+		getUsersByHobbies: (hobbies) => {
+
+			return new Promise((resolve, reject) => {
+
+        User.find({
+          $and: [
+            {
+              $or: [
+                {
+                  hobbies: "football"
+                },
+                {
+                  hobbies: "eat"
+                }
+              ]
+            }
+          ]
+        })
+        .then(result => {
+          resolve(result);
+        })
+        .catch(error => {
+          reject(error);
+        })
+
+
+				// User.find({})
+				// .then(users => {
+				// let userArray = [];
+				// users.forEach(user => {
+				// 		  user.hobbies.map(userHobbies => {
+				// 			if (userHobbies === hobbies) {
+				// 				userArray.push(user);
+				// 			}
+				// 		})
+				// 		return userArray;
+        //   });
+          
+        //   if (userArray.length === 0) {
+        //     let errors = errorMessage.noUserFound();
+        //     reject(errors);
+        //   }
+
+				// 	resolve(userArray)
+				// })
+				// .catch(error => {
+				// 	let errors = errorMessage.noUserFound();
+				// 	reject(errors);
+				// })
+
+
+			});
+
+		}
+		//getUsersByHobbies
+		//loop through the entire User documents
+			//extract the hobbies
+			//find if the hobbies matches the input hobbies
+			//set the found user to an array
+		//else 
+			//no matched hobbies found
 }
