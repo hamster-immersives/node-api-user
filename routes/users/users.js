@@ -185,9 +185,7 @@ router.get('/getuserbyage', function(req, res) {
 
 router.get('/getusersbyhobbies', function(req, res) {
 
-  console.log(req.query)
-
-  userController.getUsersByHobbies(req.query.hobbies)
+  userController.getUsersByHobbies(req.query)
                 .then(result => {
                   res.json(result);
                 })

@@ -242,21 +242,31 @@ module.exports = {
 				});
 			});
 		}, 
-		getUsersByHobbies: (hobbies) => {
+		getUsersByHobbies: (hobbiesObj) => {
+      
+      let hobbiesArray = hobbiesObj.hobbies;
 
+      let resultsArray = [];
+
+      hobbiesArray.forEach(hobbies => {
+        let dataObj = {};
+        dataObj.hobbies = hobbies;
+        resultsArray.push(dataObj);
+      });
+
+      console.log(resultsArray)
+    
+      // for(let key in hobbiesObj) {
+      //   let dataObj = {}
+      //   dataObj.hobbies = hobbiesObj[key];
+      //   queryArray.push(dataObj)
+      // }
+      // console.log(queryArray)
 			return new Promise((resolve, reject) => {
-
         User.find({
           $and: [
             {
-              $or: [
-                {
-                  hobbies: "football"
-                },
-                {
-                  hobbies: "eat"
-                }
-              ]
+              $or: resultsArray
             }
           ]
         })
