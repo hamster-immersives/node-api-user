@@ -243,26 +243,46 @@ module.exports = {
 			});
 		}, 
 		getUsersByHobbies: (hobbiesObj) => {
-      
-      let hobbiesArray = hobbiesObj.hobbies;
 
-      let resultsArray = [];
+        let resultsArray = [];
 
-      hobbiesArray.forEach(hobbies => {
-        let dataObj = {};
-        dataObj.hobbies = hobbies;
-        resultsArray.push(dataObj);
-      });
+        if (hobbiesObj.hobbies instanceof Array) {
 
-      console.log(resultsArray)
-    
-      // for(let key in hobbiesObj) {
-      //   let dataObj = {}
-      //   dataObj.hobbies = hobbiesObj[key];
-      //   queryArray.push(dataObj)
-      // }
-      // console.log(queryArray)
+          hobbiesObj.hobbies.forEach(hobbies => {
+           let dataObj = {};
+             dataObj.hobbies = hobbies;
+             resultsArray.push(dataObj);
+           });
+
+        } else if (hobbiesObj instanceof Object) {
+
+          for(let key in hobbiesObj) {
+            let dataObj = {}
+            dataObj.hobbies = hobbiesObj[key];
+            resultsArray.push(dataObj)
+          }
+          
+        }
+        
+
+
+      //check if hobbiesObj is a {}         
+        // for(let key in hobbiesObj) {
+        //   let dataObj = {}
+        //   dataObj.hobbies = hobbiesObj[key];
+        //   resultsArray.push(dataObj)
+        // }
+        //else 
+      //its an array
+      // let hobbiesArray = hobbiesObj.hobbies;
+      // hobbiesArray.forEach(hobbies => {
+      //   let dataObj = {};
+      //   dataObj.hobbies = hobbies;
+      //   resultsArray.push(dataObj);
+      // });
+
 			return new Promise((resolve, reject) => {
+        //resolve('----')
         User.find({
           $and: [
             {

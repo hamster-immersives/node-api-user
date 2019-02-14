@@ -184,6 +184,11 @@ router.get('/getuserbyage', function(req, res) {
 })
 
 router.get('/getusersbyhobbies', function(req, res) {
+  
+  if (Object.keys(req.query).length === 0 ) {
+    res.status(400).send('You need to have an query');
+    return;
+  }
 
   userController.getUsersByHobbies(req.query)
                 .then(result => {
